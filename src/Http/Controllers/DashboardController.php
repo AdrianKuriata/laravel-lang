@@ -3,16 +3,22 @@
 namespace Devtemple\LaravelLang\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Artisan;
 
 class DashboardController extends Controller
 {
     /**
      * Display a listing of the resource.
-     *
+     * @todo Usunąć później artisan:call gdy nie będzie potrzebny
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
+        Artisan::call('vendor:publish', [
+            '--tag' => 'laravel-lang-public',
+            '--force' => true
+        ]);
+
         return view('laravel-lang::index');
     }
 

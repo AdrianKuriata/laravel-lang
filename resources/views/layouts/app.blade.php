@@ -9,13 +9,25 @@
 
     <title>Laravel Lang</title>
 
+    <!-- Font -->
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu&display=swap&subset=latin-ext" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.9.0/css/all.min.css">
+
     <!-- Styles -->
+    <link rel="stylesheet" href="{{package_asset('css/laravel-lang.css')}}" />
+    @stack('css')
 </head>
 <body>
 <div id="app">
-    Test
+    @include('laravel-lang::layouts.partials.header')
+
+    <div class="container content">
+        @yield('content')
+    </div>
 </div>
 
 <!-- Scripts -->
+<script src="{{package_asset('js/laravel-lang.js')}}"></script>
+@stack('js')
 </body>
 </html>

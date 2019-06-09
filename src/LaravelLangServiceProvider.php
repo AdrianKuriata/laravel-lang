@@ -18,15 +18,22 @@ class LaravelLangServiceProvider extends ServiceProvider
 
     /**
      * Bootstrap services.
-     *
+     * @todo Później spróbować załadować funkcje globalne na poziomie composer.json
      * @return void
      */
     public function boot()
     {
+        require(__DIR__ . '/Helpers/helpers.php');
+
+        // Config
         $this->publishes([
-            // Config
-            __DIR__ . '/../config/laravel-lang.php' => config_path('laravel-lang.php'),
-        ], 'laravel-lang');
+            __DIR__ . '/../config/laravel-lang.php' => config_path('laravel-lang.php')
+        ], 'laravel-lang-config');
+
+        // Public Assets
+        $this->publishes([
+            __DIR__ . '/../public' => public_path('vendor/devtemple/laravel-lang')
+        ], 'laravel-lang-public');
 
         // Routes
         $this->loadRoutesFrom(__DIR__ . '/../routes/web.php');
