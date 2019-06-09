@@ -1,0 +1,36 @@
+{
+    "name": "devtemple/laravel-lang",
+    "description": "Package for managing JSON language files with pretty management panel.",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Adrian Kuriata",
+            "email": "adriandj83@gmail.com"
+        }
+    ],
+    "require": {
+        "php": "^7.3"
+    },
+    "minimum-stability": "stable",
+    "autoload": {
+        "psr-4": {
+            "Devtemple\\LaravelLang\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Devtemple\\LaravelLang\\Tests\\": "tests/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Devtemple\\LaravelLang\\LaravelLangServiceProvider"
+            ]
+        },
+        "branch-alias": {
+            "dev-master": "1.0-dev"
+        }
+    }
+}
