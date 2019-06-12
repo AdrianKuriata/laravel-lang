@@ -18,8 +18,9 @@ class LaravelLangServiceProvider extends ServiceProvider
 
     /**
      * Bootstrap services.
-     * @todo Później spróbować załadować funkcje globalne na poziomie composer.json
+     *
      * @return void
+     * @todo Później spróbować załadować funkcje globalne na poziomie composer.json
      */
     public function boot()
     {
@@ -41,6 +42,9 @@ class LaravelLangServiceProvider extends ServiceProvider
 
         // Views
         $this->loadViewsFrom(__DIR__ . '/../resources/views', 'laravel-lang');
+
+        // Translations
+        $this->loadTranslationsFrom(__DIR__ . '/../resources/lang', 'laravel-lang');
     }
 
     private function setPropertyNamespaceForRoutes()

@@ -10,5 +10,10 @@ return [
      * Set a middleware for package routes
      * @todo Dodać później auth middleware jako defaultowy
      ------------------------------------------------------------------------------------------*/
-    'middleware' => []
+    'middleware' => [],
+
+    /* -----------------------------------------------------------------------------------------
+     * Set a default selected value after access panel
+     ------------------------------------------------------------------------------------------*/
+    'locale' => 'pl'
 ];
