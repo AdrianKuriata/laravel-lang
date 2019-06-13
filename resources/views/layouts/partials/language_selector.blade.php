@@ -10,6 +10,12 @@
                 role="option" aria-selected="true">
                 {{config('laravel-lang.locale')}}
             </li>
+            @foreach ($languages as $lang)
+                <li class="mdc-list-item" data-value="{{$lang}}"
+                    role="option" aria-selected="true">
+                    {{$lang}}
+                </li>
+            @endforeach
         </ul>
     </div>
     <span id="demo-label" class="mdc-floating-label mdc-floating-label--float-above">

@@ -24,6 +24,8 @@ class LaravelLangServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        view()->share('languages', ['en', 'es', 'fr']);
+
         require(__DIR__ . '/Helpers/helpers.php');
 
         // Config
