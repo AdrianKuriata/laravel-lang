@@ -58,7 +58,7 @@ class DashboardController extends Controller
         $this->manager->createLanguage($request->code);
 
         return response()->json([
-            'test' => 'test'
+            'message' => trans('laravel-lang::validation.success')
         ]);
     }
 
@@ -104,6 +104,16 @@ class DashboardController extends Controller
      */
     public function destroy($id)
     {
-        //
+        if (is_string($id)) {
+            $this->manager->deleteLanguages($id);
+
+            return back();
+        }
+
+        if ($id == 1) {
+            $this->manager->deleteLanguages();
+
+            return back();
+        }
     }
 }

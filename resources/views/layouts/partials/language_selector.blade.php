@@ -11,8 +11,7 @@
                 {{config('laravel-lang.locale')}}
             </li>
             @foreach ($languages as $lang)
-                <li class="mdc-list-item" data-value="{{$lang}}"
-                    role="option" aria-selected="true">
+                <li class="mdc-list-item" data-value="{{$lang}}" role="option" aria-selected="true">
                     {{$lang}}
                 </li>
             @endforeach
