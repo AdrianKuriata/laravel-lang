@@ -69,7 +69,7 @@
                 console.log("changed?");
             },
             destroyLanguage(code) {
-                // @todo Do poprawienia to jest.
+                // @todo Do poprawienia to jest. nie chce coś tutaj działać, wysyła na jakiś dziwny link, nie taki co trzeba.
                 axios({
                     url: `${window.location.protocol}//${window.location.host}/laravel-lang/${code}`,
                     method: 'DELETE'
