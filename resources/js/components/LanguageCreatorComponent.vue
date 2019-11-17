@@ -3,37 +3,45 @@
         <button
             @click="openModal"
             type="button"
-            class="btn btn-link"
-            :title="titleText"
+            class="btn btn-icon"
         >
             <i class="fa fa-plus"></i>
         </button>
 
-<!--        <form action="{{route(config('laravel-lang.route') . '.store')}}" method="POST">-->
-<!--            @csrf-->
-<!--            <div class="form-group">-->
-<!--                <div class="mdc-text-field">-->
-<!--                    <input type="text" name="code" id="my-text-field" class="mdc-text-field__input">-->
-<!--                    <label class="mdc-floating-label" for="my-text-field">-->
-<!--                        {{trans('laravel-lang::language_picker.input_language')}}-->
-<!--                    </label>-->
-<!--                    <div class="mdc-line-ripple"></div>-->
-<!--                </div>-->
-<!--            </div>-->
+        <div :class="{'modal fade' : true, 'show' : showModal}"
+             :style="{'display' : showModal? 'block' : 'none'}"
+             id="showCreateLanguageModal"
+             tabindex="-1" role="dialog"
+             aria-labelledby="showCreateLanguageModalTitle" aria-hidden="true"
+        >
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="showCreateLanguageModalTitle" v-text="modalTitleText"></h5>
+                        <button type="button" class="close"  @click="closeModal">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <form :action="createRoute" method="POST">
+                        <input type="hidden" name="_token" :value="csrf">
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label for="code" v-text="inputLabelText"></label>
+                                <input type="text" name="code" id="code"
+                                   :class="{'form-control' : true, 'is-invalid' : hasErrors}" :placeholder="inputPlaceholderText"
+                                >
 
-<!--            <div class="d-flex justify-content-end mt-3">-->
-<!--                <div class="mr-2">-->
-<!--                    <button type="button" class="mdc-button mdc-light" data-mdc-dialog-action="cancel">-->
-<!--                        <span class="mdc-button__label">{{trans('laravel-lang::language_picker.close')}}</span>-->
-<!--                    </button>-->
-<!--                </div>-->
-<!--                <div>-->
-<!--                    <button type="button" class="mdc-button mdc-dark save-language">-->
-<!--                        <span class="mdc-button__label">{{trans('laravel-lang::language_picker.create')}}</span>-->
-<!--                    </button>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </form>-->
+                                <div class="invalid-feedback" v-if="hasErrors" v-text="hasErrors"></div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" @click="closeModal" v-text="closeButtonText"></button>
+                            <button type="submit" class="btn btn-primary" v-text="createButtonText"></button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -43,38 +51,49 @@
             return {
                 languages: [],
                 selected_language: null,
+                csrf: '',
+                showModal: false
             };
         },
         props: [
-            'titleText'
+            'modalTitleText',
+            'closeButtonText',
+            'createButtonText',
+            'inputLabelText',
+            'inputPlaceholderText',
+            'hasErrors'
         ],
         computed: {
-            defaultLanguage() {
-                return this.languages.filter(item => {
-                    return item.is_default;
-                })[0];
-            },
-            orderedLanguages() {
-                return this.languages.sort((a, b) => {
-                    if (a.code < b.code)
-                        return -1;
-                    if (a.code > b.code)
-                        return 1;
-                    return 0;
-                });
+            createRoute() {
+                return route(fullRoute('languages.store'));
             }
         },
-        created() {
-            axios({
-                url: route(fullRoute('languages.index')),
-                method: 'GET',
-            }).then(d => {
-                this.languages = d.data.languages;
-            });
+        mounted() {
+            let token = document.head.querySelector('meta[name="csrf-token"]');
+
+            if (token) {
+                this.csrf = token.content;
+            }
+
+            if (this.hasErrors) {
+                this.showModal = true;
+            }
         },
         methods: {
             openModal() {
-
+                this.showModal = true;
+            },
+            closeModal() {
+                this.showModal = false;
+            }
+        },
+        watch: {
+            showModal(newValue) {
+                if (newValue) {
+                    document.body.classList.add('modal-open');
+                } else {
+                    document.body.classList.remove('modal-open');
+                }
             }
         }
     }

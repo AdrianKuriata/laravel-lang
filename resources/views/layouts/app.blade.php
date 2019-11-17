@@ -28,10 +28,21 @@
     @include('laravel-lang::layouts.partials.header')
 
     <div class="container">
+        @foreach (['success', 'warning', 'primary', 'secondary', 'info', 'danger'] as $type)
+            @if(session()->has($type))
+                <alert-component type="{{$type}}" message="{{session()->get($type)}}"></alert-component>
+                {{session()->forget($type)}}
+            @endif
+        @endforeach
+
         @yield('content')
     </div>
 
     @stack('bottom')
+
+    <div class="p-3 text-center border-top shadow-sm mt-3">
+        Made with <i class="fa fa-heart text-danger"></i> by Devtemple
+    </div>
 </div>
 
 <!-- Scripts -->

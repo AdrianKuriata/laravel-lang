@@ -8,7 +8,7 @@
             <option v-text="lang.code" :selected="lang.code == defaultLanguage.code" v-for="lang in orderedLanguages" :value="lang.code"></option>
         </select>
         <div class="input-group-append">
-            <button class="btn btn-outline-secondary" type="button"><i class="fa fa-trash" @click="destroyLanguage"></i></button>
+            <button class="btn btn-outline-dark" type="button"><i class="fa fa-trash" @click="destroy"></i></button>
         </div>
     </div>
 </template>
@@ -50,7 +50,7 @@
             });
         },
         methods: {
-            destroyLanguage() {
+            destroy() {
                 axios({
                     url: route(fullRoute('languages.destroy'), this.selected_language),
                     method: 'POST',

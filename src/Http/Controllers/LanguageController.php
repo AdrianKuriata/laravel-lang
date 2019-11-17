@@ -49,9 +49,7 @@ class LanguageController extends Controller
     {
         $this->manager->createLanguage($request->code);
 
-        return response()->json([
-            'message' => trans('laravel-lang::validation.success')
-        ]);
+        return back()->with('success', 'Poprawnie utworzyłeś nowy język.');
     }
 
     /**

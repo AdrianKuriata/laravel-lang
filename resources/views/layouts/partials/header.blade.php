@@ -17,26 +17,31 @@
                     label-text="{{trans('laravel-lang::language_picker.label')}}"
                 ></language-selector-component>
             </li>
-            <li class="nav-item">
+            <li class="nav-item mr-2">
                 <language-creator-component
-                    title-text="{{trans('laravel-lang::language_picker.create_button_tooltip')}}"
+                    close-button-text="{{trans('laravel-lang::create_language.close')}}"
+                    create-button-text="{{trans('laravel-lang::create_language.create')}}"
+                    modal-title-text="{{trans('laravel-lang::create_language.modal_title')}}"
+                    input-label-text="{{trans('laravel-lang::create_language.input.label')}}"
+                    input-placeholder-text="{{trans('laravel-lang::create_language.input.label')}}"
+                    has-errors="{{$errors->has('code')? $errors->first('code') : ''}}"
                 ></language-creator-component>
             </li>
-            <li class="nav-item">
-                <a href="#" class="nav-link" title="Skanuj w poszukiwaniu nowych elementów"><i class="fab fa-searchengin"></i></a>
+            <li class="nav-item mr-2">
+                <a href="#" class="btn btn-icon" title="Skanuj w poszukiwaniu nowych elementów"><i class="fab fa-searchengin"></i></a>
             </li>
             <li class="nav-item">
-{{--                <form action="{{route(config('laravel-lang.route') . '.destroy', ['id' => 1])}}" method="POST">--}}
-{{--                    @csrf--}}
-{{--                    @method('DELETE')--}}
+                <form action="{{route(config('laravel-lang.route') . '.languages.destroy', ['id' => 1])}}" method="POST">
+                    @csrf
+                    @method('DELETE')
 
-{{--                    <button type="submit"--}}
-{{--                        class="nav-link btn btn-link"--}}
-{{--                        title="{{trans('laravel-lang::language_picker.clear_all_langs_button_tooltip')}}"--}}
-{{--                    >--}}
-{{--                        <i class="fa fa-trash"></i>--}}
-{{--                    </button>--}}
-{{--                </form>--}}
+                    <button type="submit"
+                        class="btn btn-icon"
+                        title="{{trans('laravel-lang::translations.destroy_all_tooltip')}}"
+                    >
+                        <i class="fa fa-trash"></i>
+                    </button>
+                </form>
             </li>
         </ul>
     </div>
