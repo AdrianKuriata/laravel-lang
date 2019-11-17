@@ -10,7 +10,8 @@
         }
     ],
     "require": {
-        "php": "^7.0"
+        "php": "^7.0",
+        "tightenco/ziggy": "dev"
     },
     "minimum-stability": "dev",
     "autoload": {

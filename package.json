@@ -11,21 +11,15 @@
     },
     "devDependencies": {
         "axios": "^0.19.0",
-        "cross-env": "^5.1",
-        "laravel-mix": "^4.0.7",
+        "cross-env": "^5.2.1",
+        "laravel-mix": "^4.1.4",
         "resolve-url-loader": "^2.3.1",
-        "sass": "^1.15.2",
-        "sass-loader": "^7.1.0",
+        "sass": "^1.23.6",
+        "sass-loader": "^7.3.1",
         "vue": "^2.5.17",
         "vue-template-compiler": "^2.6.10"
     },
     "dependencies": {
-        "@material/button": "^2.3.0",
-        "@material/dialog": "^2.3.0",
-        "@material/list": "^2.3.0",
-        "@material/select": "^2.3.1",
-        "@material/textfield": "^2.3.1",
-        "@material/top-app-bar": "^2.3.0",
         "bootstrap": "^4.3.1"
     }
 }

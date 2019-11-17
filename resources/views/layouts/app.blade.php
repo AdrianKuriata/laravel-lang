@@ -1,6 +1,12 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
+    @routes
+    <script>
+        function fullRoute(route) {
+            return `{{config('laravel-lang.route')}}.${route}`
+        }
+    </script>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -21,7 +27,7 @@
 <div id="app">
     @include('laravel-lang::layouts.partials.header')
 
-    <div class="container content">
+    <div class="container">
         @yield('content')
     </div>
 

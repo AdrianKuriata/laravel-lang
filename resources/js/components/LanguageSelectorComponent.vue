@@ -1,36 +1,29 @@
 <template>
-    <div class="mdc-select">
-        <input @change="selectorValueChanged" type="hidden" name="enhanced-select" :value="defaultLanguage? defaultLanguage.code : null">
-        <i class="mdc-select__dropdown-icon"></i>
-        <div id="demo-selected-text" class="mdc-select__selected-text text-uppercase" role="button" aria-haspopup="listbox"
-             aria-labelledby="demo-label demo-selected-text" v-text="defaultLanguage? defaultLanguage.code : ''">
+    <div class="input-group mb-0">
+        <select
+                class="form-control"
+                name="language_selector"
+                v-model="selected_language"
+        >
+            <option v-text="lang.code" :selected="lang.code == defaultLanguage.code" v-for="lang in orderedLanguages" :value="lang.code"></option>
+        </select>
+        <div class="input-group-append">
+            <button class="btn btn-outline-secondary" type="button"><i class="fa fa-trash" @click="destroyLanguage"></i></button>
         </div>
-        <div class="mdc-select__menu mdc-menu mdc-menu-surface" role="listbox">
-            <ul class="mdc-list text-uppercase">
-                <li :class="['mdc-list-item', 'd-flex', 'justify-content-between', {'mdc-list-item--selected' : lang.is_default}]" v-for="lang in orderedLanguages" :data-value="lang.code" role="option" :aria-selected="lang.is_default">
-                    <span v-text="lang.code"></span>
-                    <i v-if="!lang.is_default" class="fa fa-trash" @click="destroyLanguage(lang.code)"></i>
-                </li>
-            </ul>
-        </div>
-        <span id="demo-label" v-text="languageTranslations.label" class="mdc-floating-label mdc-floating-label--float-above">
-        </span>
-        <div class="mdc-line-ripple"></div>
     </div>
 </template>
 
 <script>
-    import {MDCSelect} from '@material/select';
-
     export default {
         data() {
             return {
                 languages: [],
-                languageTranslations: []
+                selected_language: this.defaultLocale,
             };
         },
         props: [
-            'route'
+            'labelText',
+            'defaultLocale'
         ],
         computed: {
             defaultLanguage() {
@@ -48,37 +41,24 @@
                 });
             }
         },
-        mounted() {
-            const $picker = new MDCSelect(document.querySelector('.mdc-select'));
-
-            $picker.listen('MDCSelect:change', e => {
-                console.log('changed');
-            });
-        },
         created() {
             axios({
-                url: this.route,
+                url: route(fullRoute('languages.index')),
                 method: 'GET',
             }).then(d => {
                 this.languages = d.data.languages;
-                this.languageTranslations = d.data.language_translations;
             });
         },
         methods: {
-            selectorValueChanged() {
-                console.log("changed?");
-            },
-            destroyLanguage(code) {
-                // @todo Do poprawienia to jest. nie chce coś tutaj działać, wysyła na jakiś dziwny link, nie taki co trzeba.
+            destroyLanguage() {
                 axios({
-                    url: `${window.location.protocol}//${window.location.host}/laravel-lang/${code}`,
-                    method: 'DELETE'
+                    url: route(fullRoute('languages.destroy'), this.selected_language),
+                    method: 'POST',
+                    data: {
+                        _method: 'DELETE'
+                    }
                 }).then(d => {
-                    console.log(d.data.message);
-
-                    this.languages = this.languages.filter(item => {
-                        return item.code != code;
-                    });
+                    this.languages = d.data.languages;
                 });
             }
         }

@@ -2,8 +2,10 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::group(['middleware' => ['web'] + config('laravel-lang.middleware')], function () {
-    Route::resource(config('laravel-lang.route'), 'DashboardController');
+Route::group(['middleware' => config('laravel-lang.middleware')], function () {
+    Route::group(['prefix' => config('laravel-lang.route'), 'as' => config('laravel-lang.route') . '.'], function () {
+        Route::resource('languages', 'LanguageController');
+    });
 
-    Route::resource('language_selector', 'LanguageSelectorController')->only(['index']);
+    Route::resource(config('laravel-lang.route'), 'DashboardController')->only(['index']);
 });
